@@ -1,0 +1,8 @@
+﻿  fraction.cpp
+  main.cpp
+C:\Obudai_egyetem_mernokinfo\semester5\c++prog\Fraction\Fraction\fraction.cpp(178,15): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+C:\Obudai_egyetem_mernokinfo\semester5\c++prog\Fraction\Fraction\fraction.cpp(189,19): error C2440: 'static_cast': cannot convert from 'std::string' to 'int'
+      C:\Obudai_egyetem_mernokinfo\semester5\c++prog\Fraction\Fraction\fraction.cpp(189,19):
+      No user-defined-conversion operator available that can perform this conversion, or the operator cannot be called
+  
+  Generating Code...
