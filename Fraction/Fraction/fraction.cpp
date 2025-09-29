@@ -25,7 +25,7 @@ Fraction::Fraction(double decFrac)
 	normalize();
 }
 
-Fraction::Fraction(const Fraction& other) :
+Fraction::Fraction(const Fraction& other) : // A copy constructort írja itt felül, de az eleve kb. így működik. Nem értem, hogy mi indokolja a felülírást.
 	numerator{ other.getNumerator() },
 	denominator{ other.getDenominator() }
 {
@@ -41,7 +41,7 @@ Fraction::Fraction():
 void Fraction::normalize() {
 
 	if (denominator == 0) {
-		throw std::invalid_argument("A nevez� nem lehet 0!");
+		throw std::invalid_argument("A nevezõ nem lehet 0!");
 	}
 
 	if (denominator < 0) {
@@ -63,11 +63,11 @@ int Fraction::getDenominator() const {
 	return denominator;
 }
 
-void Fraction::setNumerator(int num) {
+void Fraction::setNumerator(int num) { // Ha módosítható a számláló, akkor utána normalizálni kéne a törtet.
 	numerator = num;
 }
 
-void Fraction::setDenominator(int den) {
+void Fraction::setDenominator(int den) { // Ha módosítható a nevező, akkor utána normalizálni kéne a törtet.
 	denominator = den;
 }
 
@@ -101,7 +101,7 @@ Fraction& Fraction::operator/=(const Fraction& other) {
 	return *this;
 }
 
-Fraction operator+(Fraction lhs, const Fraction& rhs) {
+Fraction operator+(Fraction lhs, const Fraction& rhs) { // Szép megoldás.
 	lhs += rhs;
 	return lhs;
 }
@@ -120,7 +120,7 @@ Fraction operator/(Fraction lhs, const Fraction& rhs) {
 	return lhs;
 }
 
-void Fraction::print() const{
+void Fraction::print() const{ // Ez miért kell?
 	if (denominator == 1)
 		std::cout << numerator << std::endl;
 	else
@@ -140,9 +140,9 @@ std::istream& operator>>(std::istream& inputStream, Fraction& frac) {
 			inputStream.setstate(std::ios::failbit);
 		}
 		else if (d == 0) {
-			throw std::invalid_argument("A nevez� nem lehet 0!");
+			throw std::invalid_argument("A nevezõ nem lehet 0!");
 		}
-		else {
+		else { // Én inkább létrehoznék egy új Fraction objektumot és azzal felülírnám a paraméterként átvett objektumot.
 			frac.setNumerator(n);
 			frac.setDenominator(d);
 		}
@@ -153,6 +153,7 @@ std::istream& operator>>(std::istream& inputStream, Fraction& frac) {
 bool Fraction::operator==(const Fraction& other)  {
 	return (numerator * other.denominator == denominator * other.numerator);
 }
+// Hiányolom a !=, <, <=, > és >= operátorokat.
 
 Fraction::operator int() const {
 	return numerator / denominator;
@@ -166,7 +167,7 @@ Fraction::operator bool() const {
 	return numerator != 0;
 }
 
-Fraction::operator std::string() const {
+Fraction::operator std::string() const { // Ha van ilyen operátor, akkor az std::ostream-re írást is lehetne erre építeni.
 	if (denominator == 1)
 		return std::to_string(numerator);
 	else
@@ -182,11 +183,11 @@ Fraction Fraction::FractionParse(const std::string& s) {
 		den = std::stoi(s.substr(perIndex + 1));
 	}
 	else
-		throw std::invalid_argument("Nem alak�that� �t, mert nem t�rt!");
+		throw std::invalid_argument("Nem alakítható át, mert nem tört!");
 	
 	if (den == 0)
-		throw std::invalid_argument("A nevez� nem lehet 0");
+		throw std::invalid_argument("A nevezõ nem lehet 0");
 
 	Fraction f{num, den};
-	return f;
+	return f; // Lehetne simán return Fraction{ num, den }, nincs szükség a lokális temporálisra.
 }
